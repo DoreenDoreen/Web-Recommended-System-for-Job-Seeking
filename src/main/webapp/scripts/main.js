@@ -3,7 +3,7 @@
     var oAvatar = document.getElementById('avatar'),
         oWelcomeMsg = document.getElementById('welcome-msg'),
         oLogoutBtn = document.getElementById('logout-link'),
-        oLoginBtn = document.getElementById('login-btn'),    // 拿到整个的Login注册表单的Button
+        oLoginBtn = document.getElementById('login-btn'),    // get button of login form
         oLoginForm = document.getElementById('login-form'),
         oLoginUsername = document.getElementById('username'),
         oLoginPwd = document.getElementById('password'),
