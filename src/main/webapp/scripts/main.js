@@ -9,7 +9,7 @@
         oLoginPwd = document.getElementById('password'),
         oLoginFormBtn = document.getElementById('login-form-btn'),
         oLoginErrorField = document.getElementById('login-error'),
-        oRegisterBtn = document.getElementById('register-btn'),    // 拿到整个的Register注册表单的信息
+        oRegisterBtn = document.getElementById('register-btn'),    // get info from whole Registration form
         oRegisterForm = document.getElementById('register-form'),
         oRegisterUsername = document.getElementById('register-username'),
         oRegisterPwd = document.getElementById('register-password'),
@@ -17,13 +17,13 @@
         oRegisterLastName = document.getElementById('register-last-name'),
         oRegisterFormBtn = document.getElementById('register-form-btn'),
         oRegisterResultField = document.getElementById('register-result'),
-        oNearbyBtn = document.getElementById('nearby-btn'),    // 拿到NearbyButton后进行隐藏
+        oNearbyBtn = document.getElementById('nearby-btn'),    // get NearbyButton, then hiding
         oFavBtn = document.getElementById('fav-btn'),
-        oRecommendBtn = document.getElementById('recommend-btn'),  // 拿到RecommendButton后进行隐藏
+        oRecommendBtn = document.getElementById('recommend-btn'),  // get RecommendButton, then hiding
         oNavBtnBox = document.getElementsByClassName('main-nav')[0],
-        oNavBtnList = document.getElementsByClassName('main-nav-btn'), // 拿到Main-nav Button后进行隐藏
-        oItemNav = document.getElementById('item-nav'),    // 左边的nav 拿到后进行隐藏
-        oItemList = document.getElementById('item-list'),   // 右边的list 拿到后进行隐藏
+        oNavBtnList = document.getElementsByClassName('main-nav-btn'), // get Main-nav Button, then hiding
+        oItemNav = document.getElementById('item-nav'),    // get left nav, then hiding
+        oItemList = document.getElementById('item-list'),   // get right list, then hiding
         oTpl = document.getElementById('tpl').innerHTML,
 
         // 我们还提供了default data：id, password, lat, lng
@@ -39,22 +39,24 @@
        lat = 47,
         itemArr;
 
-    // init - IIFE init() 运用立即执行函数，进行作用域的隔离（因为实际的开发环境中，可能会有大量的JS代码，为了每个JS代码之间的变量不会有冲突，需要用到IIFE进行作用域的隔离，因为目前还没有学习router）
-    function init() {   // init() 这里是整个project的入口
-        // 本函数中，为了达到的目的：显示该显示的 =》 显示login信息，把不需要的隐藏起来 =》 隐藏其他信息。
-        // 在本函数中，我一共做两件事情：1. 逻辑结构； 2.事件绑定
-        validateSession();  // （1. 逻辑结构）
-        bindEvent();  // （2.事件绑定=》将所有的事件绑定全部写入此函数中）
+    // init - IIFE init() Use immediate execution functions to isolate the scope
+    // (because there may be a lot of JS code in the actual development environment,
+    // in order to avoid conflicts between the variables between each JS code, IIFE needs to be used to isolate the scope.
+    // could use router later
+    function init() {   // init() Here is the entrance of the entire project
+        // Function purpose:  display that should be displayed => display the login information, hide the unnecessary information => hide other information
+        validateSession();  // 1. Logical structure
+        bindEvent();  // 2.Event binding => Write all event bindings into this function
     }
 
     function validateSession() {
-        // （1. 逻辑结构）
-        //在本函数中，我要做的事情是switch,login 和 register，如下：
+        // 1. Logical structure
+        //Things to do in this function: switch, log in and register.
         switchLoginRegister('login');
     }
 
     function bindEvent() {
-        // （2.事件绑定)
+        // 2.Event binding
         oRegisterFormBtn.addEventListener('click', function () {  // 绑定oRegisterFormBtn注册表单按钮的事件处理函数，让它添加事件监听函数来监听“点击”事件，then,点击后，事件handler函数要进行切换，切换成注册，否则，登陆表单按钮被点击之后，就回到登陆界面
             switchLoginRegister('register')
         }, false);
