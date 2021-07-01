@@ -60,15 +60,15 @@
         oRegisterFormBtn.addEventListener('click', function () {  // 绑定oRegisterFormBtn注册表单按钮的事件处理函数，让它添加事件监听函数来监听“点击”事件，then,点击后，事件handler函数要进行切换，切换成注册，否则，登陆表单按钮被点击之后，就回到登陆界面
             switchLoginRegister('register')
         }, false);
-        oLoginFormBtn.addEventListener('click', function () {  // 绑定oLoginFormBtn登陆表单按钮事件的处理函数
+        oLoginFormBtn.addEventListener('click', function () {  // Bind oLoginFormBtn event
             switchLoginRegister('login')
         }, false);
-        oLoginBtn.addEventListener('click', loginExecutor, false); // 绑定oLoginBtn登录按钮事件的处理函数
-        oRegisterBtn.addEventListener('click', registerExecutor, false); // 绑定oRegisterBtn注册按钮的事件处理函数
+        oLoginBtn.addEventListener('click', loginExecutor, false); // Bind oLoginBtn event
+        oRegisterBtn.addEventListener('click', registerExecutor, false); // Bind oRegisterBtn event
         oNearbyBtn.addEventListener('click', loadNearbyData, false);
-        oFavBtn.addEventListener('click', loadFavoriteItems, false);     // loadFavoriteItems该函数是 event handler function
+        oFavBtn.addEventListener('click', loadFavoriteItems, false);     // loadFavoriteItems => event handler function
         oRecommendBtn.addEventListener('click', loadRecommendedItems, false);
-        oItemList.addEventListener('click', changeFavoriteItem, false);  // changeFavoriteItem是oItemList的event handler function
+        oItemList.addEventListener('click', changeFavoriteItem, false);  // changeFavoriteItem is oItemList的event handler function
     }
 
     function switchLoginRegister(name) {
