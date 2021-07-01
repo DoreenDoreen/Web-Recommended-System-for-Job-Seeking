@@ -72,21 +72,23 @@
     }
 
     function switchLoginRegister(name) {
-        // 在本函数中，我要做的是：进行注册和登录的切换，所以，我需要知道我将要切换成什么内容、界面：Login? Register?
-        // 内容切换的本质是：将需要隐藏的隐藏起来，需要显示的内容显示出来
-        showOrHideElement(oAvatar, 'none'); // style是oAvatar的一个属性，none表示不显示css样式
-        showOrHideElement(oWelcomeMsg, 'none');  // 隐藏oWelcomeMsg信息
-        showOrHideElement(oLogoutBtn, 'none');   // 隐藏oLogoutBtn信息
-        showOrHideElement(oItemNav, 'none');   // 隐藏oItemNav信息
-        showOrHideElement(oItemList, 'none');  // 隐藏oItemList信息
+        // In this function, I need to switch between registration and login,
+        // so I need to know what content and interface I will switch to either Login or Register.
+        // The essence of content switching is: hiding what needs to be hidden, and displaying what needs to be displayed
+        showOrHideElement(oAvatar, 'none'); // 2nd parameter, style is oAvatar's attribute，none means not show css layout
+        showOrHideElement(oWelcomeMsg, 'none');  // hide oWelcomeMsg info
+        showOrHideElement(oLogoutBtn, 'none');   // hide oLogoutBtn info
+        showOrHideElement(oItemNav, 'none');   // hide oItemNav
+        showOrHideElement(oItemList, 'none');  // hide oItemList
 
-        //判断一下我是要显示Login界面 还是要显示SignUp界面
-        if (name === 'login') {  // 判断条件：如果是要显示Login界面，我就需要隐藏oRegisterForm信息，保留oLoginForm信息
+        //Determine whether to show Login interface or SignUp interface
+        if (name === 'login') {  // If displaying login interface, then need to hide oRegisterForm information and keep oLoginForm information
             showOrHideElement(oRegisterForm, 'none');
-            oRegisterResultField.innerHTML = '';     // 报警区域oRegisterResultField也要隐藏掉
-            showOrHideElement(oLoginForm, 'block');  // block表示 显示css样式
+            oRegisterResultField.innerHTML = '';
+            showOrHideElement(oLoginForm, 'block');  // block means displaying css layout
 
-        } else {  // 如果是要切换到Register界面（就需要对注册时间进行事件绑定），即当我点击注册按钮时，我就需要隐藏oLogin信息，显示oRegisterForm信息
+        } else {  //If need to switch to Register interface, then need to bind the registration time event.
+            // That is, when clicking the registration button, I need to hide the oLogin information and display the oRegisterForm information
             showOrHideElement(oLoginForm, 'none');
             oLoginErrorField.innerHTML = '';
             showOrHideElement(oRegisterForm, 'block');
