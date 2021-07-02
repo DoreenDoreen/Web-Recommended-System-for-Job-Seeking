@@ -102,20 +102,21 @@
     /**
      * API Login
      */
-    function loginExecutor() {   // oLoginBtn登录按钮事件的处理函数
-        var username = oLoginUsername.value,  // username输入栏里的信息是通过 .value 属性拿到的
+    function loginExecutor() {   // oLoginBtn login button event handler
+        var username = oLoginUsername.value,  // username information as input is obtained through .value attribute
             password = oLoginPwd.value;
-        // 拿到username和password信息后，进行一个error判断，若其中一个为空，就显示一个error/warning信息，如下：
+        // After getting the username and password info, do an error judgment. If either is empty, an warning message will be displayed, as follows:
         if (username === "" || password == "") {
             oLoginErrorField.innerHTML = 'Please fill in all fields';
             return;
         }
-        // 拿到非空的username和password信息后，我需要做一个加密操作by using md5 library, 该md5 library是在index.html下面通过script标签被引入的，该种引入md5的方式把md5存在了window下面作为一个全局变量
-        // 也就是说，我会得到一个 window.md5 函数，这个函数就是我的md5 library, 所以这里我可以用md5进行加密
-        password = md5(username + md5(password));  // encode password => 加密后，我就得到了password,它就是我要向后端传入的值
-        // 这里采用的是多层加密方式，具体加密基层由自己、团队决定
+        // If neither username or password is empty, perform an encryption operation by using md5 library.
+        // The md5 library is imported through the script tag under index.html. This way of introducing md5 saves md5 under the window as a global variable.
+        // Once get a window.md5 function (it is md5 library), I can use md5 for encryption
+        password = md5(username + md5(password));  // encode password => After encryption, I get the password, it is the value I want to pass to the backend
+        // The multi-layer encryption method is applied here. Particular encryption approach is determined by the team  manager
 
-        // then, 我就要进行前后端的数据通信了，即 我将要把前端拿到的用户名和密码等信息发送给后端
+        // then, perform data communication between front and back ends => send username and password received from the front end to the back end
         ajax({
             method: 'POST',
             url: './login',
@@ -141,10 +142,10 @@
      * API Change Favorite Item
      * @param evt
      */
-    // 该函数是oItemList element的 event handler function
+    // below is oItemList element's event handler function
     function changeFavoriteItem(evt) {
-        var tar = evt.target,    // evt.target 可任意帮我拿到小桃心这个点击事件源
-            oParent = tar.parentElement;   // 我还需要知道这个点击事件源的parent是谁，以好后续更改讨薪状态，桃心上有个parentElement属性，
+        var tar = evt.target,    // evt.target can get the click event source of Little Peach Heart
+            oParent = tar.parentElement;   // I also need to know who the parent of the click event source is, so that I can change the state of the heart. There is a parentElement property on the heart.
 
         // 若oParent存在并且 其className是 'fav-link'
         if (oParent && oParent.className === 'fav-link') {
