@@ -147,14 +147,13 @@
         var tar = evt.target,    // evt.target can get the click event source of Little Peach Heart
             oParent = tar.parentElement;   // I also need to know who the parent of the click event source is, so that I can change the state of the heart. There is a parentElement property on the heart.
 
-        // 若oParent存在并且 其className是 'fav-link'
-        if (oParent && oParent.className === 'fav-link') {
+        if (oParent && oParent.className === 'fav-link') { // if oParent existing and className is 'fav-link'
             console.log('change ...')
-            var oCurLi = oParent.parentElement,   // oCurLi就是li
+            var oCurLi = oParent.parentElement,
                 classname = tar.className,
                 isFavorite = classname === 'fa fa-heart' ? true : false,
-                oItems = oItemList.getElementsByClassName('item'),    // 在子树oItemList下面去找item
-                index = Array.prototype.indexOf.call(oItems, oCurLi),      // .call 表示 Array.prototype.indexOf 该方法要用 oItems 身上，该操作等于是 把 oItems这个集合转化成了array，通过对应的index来找到其下面的对应的是第几个元素，找到后把index返回给我， 这里的index = 0， 即第一个元素
+                oItems = oItemList.getElementsByClassName('item'),    // find item under subtree oItemList
+                index = Array.prototype.indexOf.call(oItems, oCurLi),      //convert the collection of oItems into an array. Find the corresponding element below it through the corresponding index, and return the index
                 url = './history',
                 req = {
                     user_id: userId,
@@ -183,26 +182,26 @@
     /**
      * API Register
      */
-    function registerExecutor() {   // oRegisterBtn注册按钮的事件处理函数
-        // 首先，收集用户输入的信息：username，password，firstName，lastName
+    function registerExecutor() {   // oRegisterBtn event handler function
+        // first, collect input info：username，password，firstName，lastName
         var username = oRegisterUsername.value,
             password = oRegisterPwd.value,
             firstName = oRegisterFirstName.value,
             lastName = oRegisterLastName.value;
-        // 然后，对收集到的信息进行一下validation的判断，看看是否合法存在，是否为空
+        // then, do validation for those collected info
         if (username === "" || password == "" || firstName === ""
             || lastName === "") {
             oRegisterResultField.innerHTML = 'Please fill in all fields';
             return;
         }
-        // 判断下用户名是否匹配数字和字母，一个或多个
-        if (username.match(/^[a-z0-9_]+$/) === null) {    // 这里用的是regular expression
-            oRegisterResultField.innerHTML = 'Invalid username'; // 若不匹配，会输入无效的用户名提示
+        // determine if username match up using regular expression below
+        if (username.match(/^[a-z0-9_]+$/) === null) {
+            oRegisterResultField.innerHTML = 'Invalid username';
             return;
         }
-        password = md5(username + md5(password));   // 同样的操作=》对密码进行双重加密
+        password = md5(username + md5(password));   // double-encrypt the password
 
-        // 调用ajax
+        // ajax part
         ajax({
             method: 'POST',
             url: './register',
@@ -230,7 +229,7 @@
      * API Load Nearby Items
      */
     function loadNearbyData() {
-        // active side bar buttons先激活按钮
+        // active side bar buttons firstly
         activeBtn('nearby-btn');
 
         var opt = {
@@ -245,7 +244,7 @@
     /**
      * API Load Favorite Items
      */
-    // 该函数是 oFavBtn element 的 Event handler function
+    // oFavBtn element's Event handler function below
     function loadFavoriteItems() {
         activeBtn('fav-btn');
         var opt = {
@@ -275,16 +274,20 @@
      * Render Data
      * @param data
      */
-    // 我们这里的render的目的是为了把后端传来的数据注入到DOM当中去（俗称挂树），DOM当中，由于我们的拿到数据结构比较复杂，所以用了template的方式，把需要注入的数据用类似于变量的形式呈现出来，类似于变量的形式体现在index.html代码中（即采用了“加括号的方式”）
+    // The purpose of our render here is to inject the data from the backend into the DOM.
+    // Because the data structure we got is more complicated, we used the template method to present the data that needs to be injected in a form.
     function render(data) {
         var len = data.length,
             list = '',
             item;
         for (var i = 0; i < len; i++) {
             item = data[i];
+            // Template method was used to convert and display the data (through the replace function); regular expression method
             // 采用了template的方式来实现数据的转换显示（通过replace函数）; regular expression方法
             list += oTpl.replace(/{{(.*?)}}/gmi, function (node, key) {
-                                  //  找到第一个花括号/ gmi表示所有内容，进行替换； 第二个参数是使用了function(){}回调函数来实现复杂的替换逻辑 => node指的是(.*？)里面找到的内容，node可以找到我的opt下面的id，key是（）里面将要被替换成的内容，这里的node和key是replace这个方法传给它的
+                                  // find first { } /gmi represents all contents to replace;
+                // function(){} use callback fn to implement the replace logic => node means content found in (.*？)
+                // node could find id under opt，key is content in（）that will be replaced
                 console.log(key)
                 if(key === 'company_logo') {
                     return item[key] || 'https://via.placeholder.com/100';
@@ -342,17 +345,17 @@
         oWelcomeMsg.innerHTML = 'Welcome ' + userFullName;
 
         // show welcome, avatar, item area, logout btn
-        showOrHideElement(oWelcomeMsg, 'block');     // 显示图标
+        showOrHideElement(oWelcomeMsg, 'block');
         showOrHideElement(oAvatar, 'block');
         showOrHideElement(oItemNav, 'block');
         showOrHideElement(oItemList, 'block');
         showOrHideElement(oLogoutBtn, 'block');
 
         // hide login form
-        showOrHideElement(oLoginForm, 'none');     // 隐藏登录图标信息
+        showOrHideElement(oLoginForm, 'none');
     }
 
-    // 拿地理数据
+    // get geographic data
     function fetchData() {
         // get geo-location info
         initGeo(loadNearbyData);
