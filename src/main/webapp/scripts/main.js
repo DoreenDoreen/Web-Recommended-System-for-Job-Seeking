@@ -1,5 +1,5 @@
 ;(function () {
-    // get all elements 先把信息全都找出来
+    // get all elements
     var oAvatar = document.getElementById('avatar'),
         oWelcomeMsg = document.getElementById('welcome-msg'),
         oLogoutBtn = document.getElementById('logout-link'),
@@ -26,7 +26,7 @@
         oItemList = document.getElementById('item-list'),   // get right list, then hiding
         oTpl = document.getElementById('tpl').innerHTML,
 
-        // 我们还提供了default data：id, password, lat, lng
+        // Provided default data：id, password, lat, lng
         userId = '1111',
         userFullName = 'John',
         // lng = -100,
@@ -57,7 +57,9 @@
 
     function bindEvent() {
         // 2.Event binding
-        oRegisterFormBtn.addEventListener('click', function () {  // 绑定oRegisterFormBtn注册表单按钮的事件处理函数，让它添加事件监听函数来监听“点击”事件，then,点击后，事件handler函数要进行切换，切换成注册，否则，登陆表单按钮被点击之后，就回到登陆界面
+        // Binding the event handler function of the oRegisterFormBtn registration form button (add an event listener function to listen for the "click" event).
+        // After clicking, the event handler function must switch to register interface. Otherwise, after the login form button is clicked, it will back to the login interface.
+        oRegisterFormBtn.addEventListener('click', function () {
             switchLoginRegister('register')
         }, false);
         oLoginFormBtn.addEventListener('click', function () {  // Bind oLoginFormBtn event
@@ -283,7 +285,6 @@
         for (var i = 0; i < len; i++) {
             item = data[i];
             // Template method was used to convert and display the data (through the replace function); regular expression method
-            // 采用了template的方式来实现数据的转换显示（通过replace函数）; regular expression方法
             list += oTpl.replace(/{{(.*?)}}/gmi, function (node, key) {
                                   // find first { } /gmi represents all contents to replace;
                 // function(){} use callback fn to implement the replace logic => node means content found in (.*？)
@@ -405,8 +406,8 @@
                 error()
             }
         }
-            // Case4.2: 如果前后端数据通信、配对环节失败的话/有任何错误，throw error warning info
-        xhr.onerror = function () {    // 这里的 .onerror 是Ajax的实例xhr的一个属性，这里的函数是xhr去调用的，故xhr决定了什么时候去调用它，它是xhr帮我定义好的函数，别人写好的
+            // Case4.2: If any error occurred during the front-end and back-end data communication and the pairing link fail, throw error warning message
+        xhr.onerror = function () {    // The .onerror here is an attribute of the Ajax instance xhr. The function here is called by xhr, so xhr decides when to call it.
             throw new Error('The request could not be completed.')
         }
     }
