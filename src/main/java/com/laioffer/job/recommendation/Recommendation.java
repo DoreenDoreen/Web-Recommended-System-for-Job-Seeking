@@ -42,7 +42,7 @@ public class Recommendation {
             List<Item> items = client.search(lat, lon, keyword.getKey());
 
             for (Item item : items) {
-                // 去重：已经喜欢过了，不用再加了
+                // Deduplication: Has liked it, no need to add
                 if (!favoritedItemIds.contains(item.getId()) && !visitedItemIds.contains(item.getId())) {
                     recommendedItems.add(item);
                     visitedItemIds.add(item.getId());
