@@ -365,44 +365,44 @@
      * Helper function - AJAX
      * @param opt
      */
-    // ajax的定义
-    // 这个 helper function 实际上是做了一个ajax请求，所有的ajax都要通过这个helper function来实现
-    // 该 helper function 目的：实现所有的 Request 和 Response 的请求
-    // 为何要写这个 helper function？ 第一：本项目中的前后端通信会产生很多的 Request 和 Response 的请求，为了避免代码的重复性，实现代码的整洁，我就把这些需要很多次的相同的操作写在了 helper function里
-    //                             第二：在JS代码中，一般情况下，由于一个函数只做一件事情，故我这个helper function函数只实现了一个功能，即“数据通信”这件事情。
-    function ajax(opt) {   // opt 在这里作为了 传入项， opt本身是一个object/instance
-        var opt = opt || {},   // opt 是配置项(若该opt存在，他就是opt,否则就默认为空对象 {} )，该配置项可以避免 "由于传入的参数的顺序的变化导致整个回调函数被调用的的失败问题" the order/sequence change of called parameter may generate failure of callback function 带来的弊端
-            method = (opt.method || 'GET').toUpperCase(),   // 传个method，这是opt对象的属性attribute， method在这里也是 传入项; method方法从哪里获取？要么从opt配置项中的method获得，或者method它是一个默认的GET方法/请求
-            url = opt.url,   // 传进来个url， 它是对象的属性
-            data = opt.data || null,  // data如何获得？一样的，如果data存在我就获得data,否则为空null
-            success = opt.success || function () {    // 要给我一个成功的回调函数，告诉我是否成功了，成功了的话要做什么事情， 对于成功了以后需要做什么就要通过回调函数才知道
+    // ajax
+    // This helper function actually made an ajax request, all ajax must be implemented through this helper function
+    // The purpose of this helper function：Implement all Request and Response requests
+    // Why need this helper function？
+    // 1st: The front-end and back-end communication will generate many Request and Response requests. To avoid code duplication and keep concise, I wrote these same operations that require many times in the helper function.
+    // 2nd: For JS code, because typically a function only does one thing, this helper function only implements one function， "data communication".
+    function ajax(opt) {   // opt as an input parameter itself is an object/instance
+        var opt = opt || {},   // opt is a configuration item (if the opt exists, it is opt, otherwise it will default to an empty object {} ). This configuration item can avoid "the failure of the entire callback function being called due to the change of the order of the incoming parameters"
+            method = (opt.method || 'GET').toUpperCase(),   // Pass in a methods, where get method ? Either from the method in the opt configuration item，or method is a default GET method/request
+            url = opt.url,   // Pass in a url, it is an attribute of the object
+            data = opt.data || null,  // How to obtain data? Same. if data exists, I will get data, otherwise it will be null
+            success = opt.success || function () {    // A success callback function tells whether succeeds, what to do if it succeeds, and what needs to be done after success is known through the callback function.
             },
-            error = opt.error || function () {    // 再给我一个失败的回调函数， 即 失败了我要做什么，失败了以后需要做什么就通过失败的回调函数
+            error = opt.error || function () {    // Give a failed callback function, that is, what need to do if failed, and what need to do after the failure is through the failed callback function.
             },
-            xhr = new XMLHttpRequest();   // then, 创建一个httpRequest的实例instance xhr => Step1: Create a xhr instance
+            xhr = new XMLHttpRequest();   // Step1: Create a xhr instance of httpRequest
 
-        if (!url) {   // 如果url不存在，及要扔一个提醒说missing url
+        if (!url) {
             throw new Error('missing url');
         }
 
-        xhr.open(method, url, true);    // Step2: Configuration => 配置method and url
+        xhr.open(method, url, true);    // Step2: Configuration => method and url
         // send 这里分两种情况
-        if (!data) {   // case2.1: 没有数据的话，就直接发送
+        if (!data) {   // case2.1: if no data, send directly
             xhr.send();
-        } else {   // case2.2: 若有数据的话，我就需要设置一下我的content type
-            xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');     //  本项目中的数据类型是JSON,并且解放方式是utf-8
-            // 然后，我以 string 的方式进行数据的发送
+        } else {   // case2.2: if has data，set the content type
+            xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');     //  data type id JSON
+            // then, send data in string mode
             xhr.send(JSON.stringify(data));
         }
 
-        // Step4: listen request and response =》监听
-            // Case4.1: 前后端数据传递成功/配对成功 => 我拿到了后端返回来的data
+        // Step4: listen request and response => monitor
+            // Case4.1: The front-end and back-end data is successfully transmitted/paired => got the data returned from the back-end
         xhr.onload = function () {
-            if (xhr.status === 200) {  // 4.1.1 如果status === 200 的话：
-                success(JSON.parse(xhr.responseText))   // 拿到数据后，我需要把data进行解析，变成对象xhr的格式，然后把它传给我的“成功的回调函数”，至于拿到数据后的成功回调函数具体要做什么，需要另外在回调函数success里进行具体定义
-            } else {  // 4.1.2 否则，若status !== 200 的话，执行error（）函数
+            if (xhr.status === 200) {  // 4.1.1 status === 200
+                success(JSON.parse(xhr.responseText))   // After obtaining the data, I need to parse the data into the format of the object xhr, then pass it to "successful callback function"
+            } else {  // 4.1.2 status !== 200，execute error() function
                 error()
-                // else 语句这里，传入的是 “失败的回调函数”，即失败了之后要做什么事，是我自己传入的函数，我自己定义的
             }
         }
             // Case4.2: 如果前后端数据通信、配对环节失败的话/有任何错误，throw error warning info
