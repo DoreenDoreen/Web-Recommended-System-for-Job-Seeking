@@ -25,9 +25,11 @@ public class Recommendation {
         }
         connection.close();
 
+
         List<Map.Entry<String, Integer>> keywordList = new ArrayList<>(allKeywords.entrySet());
+        
         keywordList.sort((Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) ->
-                Integer.compare(e2.getValue(), e1.getValue()));
+                Integer.compare(e1.getValue(), e2.getValue()));
 
         // Cut down search list only top 3
         if (keywordList.size() > 3) {
