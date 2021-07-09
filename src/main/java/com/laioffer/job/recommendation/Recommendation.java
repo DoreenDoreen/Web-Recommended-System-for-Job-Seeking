@@ -31,12 +31,25 @@ public class Recommendation {
                 Integer.compare(e1.getValue(), e2.getValue()));
 
         // Cut down search list only top 3
-        if () {
-
+        if (keywordList.size() > 3) {
+            keywordList = keywordList.subList(0, 3);
         }
 
         // Step 3, search based on keywords, filter out favorite items
         Set<String> visitedItemIds = new HashSet<>();
+        GitHubClient client = new GitHubClient();
+
+        for (Map.Entry<String, Integer> keyword : keywordList) {
+            List<Item> items = client.search(lat, lon, keyword.getKey());
+
+            for (Item item : items) {
+                // Deduplication: has liked it, no need to add
+                if (!favoritedItemIds.contains() && !visitedItemIds.contains(item.getId())) {
+                    recommendedItems.add(item);
+                    visitedItemIds.add(item.getId());
+                }
+            }
+        }
 
     }
 
