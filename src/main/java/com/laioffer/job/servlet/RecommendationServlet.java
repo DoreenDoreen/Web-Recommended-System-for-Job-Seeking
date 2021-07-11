@@ -27,17 +27,13 @@ public class RecommendationServlet extends HttpServlet {
             return;
         }
 
-
-
         String userId = request.getParameter("user_id");
         double lat = Double.parseDouble(request.getParameter("lat"));
         double lon = Double.parseDouble(request.getParameter("lon"));
 
-        Recommendation recommendation = new Recommendation();
+        Recommendation recommendation = new Recommentation();
         List<Item> items = recommendation.recommendItems(userId, lat, lon);
         mapper.writeValue(response.getWriter(), items);
-
-
 
         // response.getWriter().write("This is RecommendationServlet");
     }
