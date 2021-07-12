@@ -68,6 +68,6 @@ public class ExampleBookServlet extends HttpServlet {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", "ok");
         response.getWriter().print(jsonResponse);
-        
+
     }
 }
