@@ -64,10 +64,10 @@ public class ExampleBookServlet extends HttpServlet {
         System.out.println("ISBN is: " + isbn);
 
         // DB
-
-        response.setContentType("application/json");
+        response.setContentType("application.=/json");
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("status", "ok");
         response.getWriter().print(jsonResponse);
+        
     }
 }
