@@ -28,7 +28,7 @@ public class HistoryServlet extends HttpServlet {
         }
 
         response.setContentType("application/json");
-        // ObjectMapper mapper = new ObjectMapper();
+
 
         String userId = request.getParameter("user_id");
 
