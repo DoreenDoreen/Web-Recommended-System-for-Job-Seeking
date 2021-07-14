@@ -81,7 +81,7 @@ public class HistoryServlet extends HttpServlet {
         connection.unsetFavoriteItems(body.userId, body.favorite.getId());
         connection.close();
         ResultResponse resultResponse = new ResultResponse("SUCCESS");
-        
+        mapper.writeValue(response.getWriter(), resultResponse); 
 
         ResultResponse resultResponse = new ResultResponse("SUCCESS");
         mapper.writeValue(response.getWriter(), resultResponse);
