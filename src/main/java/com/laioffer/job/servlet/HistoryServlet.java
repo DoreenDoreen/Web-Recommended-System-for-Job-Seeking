@@ -80,6 +80,8 @@ public class HistoryServlet extends HttpServlet {
         MySQLConnection connection = new MySQLConnection();
         connection.unsetFavoriteItems(body.userId, body.favorite.getId());
         connection.close();
+        ResultResponse resultResponse = new ResultResponse("SUCCESS");
+        
 
         ResultResponse resultResponse = new ResultResponse("SUCCESS");
         mapper.writeValue(response.getWriter(), resultResponse);
