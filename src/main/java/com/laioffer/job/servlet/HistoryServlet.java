@@ -28,14 +28,16 @@ public class HistoryServlet extends HttpServlet {
         }
 
         response.setContentType("application/json");
-        
-        String userId = request.getParameter("user_id");
 
+        String userId = request.getParameter("user_id");
 
         MySQLConnection connection = new MySQLConnection();
         Set<Item> items = connection.getFavoriteItems(userId);
         connection.close();
         mapper.writeValue(response.getWriter(), items);
+
+        MySQLConnection connection = new MySQLConnection();
+        Set<Item> items = connection.getFavoriteItems(userId);
 
     }
 
