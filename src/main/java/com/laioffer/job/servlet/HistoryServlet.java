@@ -36,9 +36,6 @@ public class HistoryServlet extends HttpServlet {
         connection.close();
         mapper.writeValue(response.getWriter(), items);
 
-        MySQLConnection connection = new MySQLConnection();
-        Set<Item> items = connection.getFavoriteItems(userId);
-
     }
 
     @Override
