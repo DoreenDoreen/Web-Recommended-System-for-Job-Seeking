@@ -82,6 +82,6 @@ public class HistoryServlet extends HttpServlet {
         connection.close();
         ResultResponse resultResponse = new ResultResponse("SUCCESS");
         mapper.writeValue(response.getWriter(), resultResponse);
-        
+
     }
 }
