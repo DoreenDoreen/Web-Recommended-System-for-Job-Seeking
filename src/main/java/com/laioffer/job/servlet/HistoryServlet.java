@@ -71,16 +71,7 @@ public class HistoryServlet extends HttpServlet {
             mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
             return;
         }
-
-        ObjectMapper mapper = new ObjectMapper();
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.setStatus(403);
-            mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
-            return;
-        }
-
-
+        
         response.setContentType("application/json");
         // ObjectMapper mapper = new ObjectMapper();
 
