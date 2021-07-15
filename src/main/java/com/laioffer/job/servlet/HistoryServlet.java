@@ -63,6 +63,11 @@ public class HistoryServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        HttpSession session = request.getSession(false);
+        
+
         ObjectMapper mapper = new ObjectMapper();
         HttpSession session = request.getSession(false);
         if (session == null) {
