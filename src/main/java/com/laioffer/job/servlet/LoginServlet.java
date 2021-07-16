@@ -26,32 +26,19 @@ public class LoginServlet extends HttpServlet {
         LoginRequestBody body = mapper.readValue(request.getReader(), LoginRequestBody.class);
         MySQLConnection connection = new MySQLConnection();
         LoginResponseBody loginResponseBody;
-        if (connection.verifyLogin(body.userId, body.password)) {
-            HttpSession session = request.getSession();  // create session, and save to server memory, send id to cookies
-            session.setAttribute("user_id", body.userId);
-            loginResponseBody = new LoginResponseBody("OK", body.userId, connection.getFullname(body.userId));
-        } else {
-            loginResponseBody = new LoginResponseBody("Login failed, user id and passcode do not exist.", null, null);
-            response.setStatus(401);
-        }
-        connection.close();
-        response.setContentType("application/json");
-        mapper.writeValue(response.getWriter(), loginResponseBody);
-    }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        LoginRequestBody body = mapper.readValue(request.getReader(), LoginRequestBody.close);
-        MySQLConnection connection = new MySQLConnection();
-        LoginResponseBody loginResponseBody;
+
         if (connection.verifyLogin(body.userId, body.password)) {
-            HttpSession session = request.getSession();
+            HttpSession session = request.getSession();  // create session and save to server memory, send id to cookies
             session.setAttribute("user_id", body.userId);
             loginResponseBody = new LoginResponseBody("OK", body.userId, connection.getFullname(body.userId));
         } else {
             loginResponseBody = new LoginResponseBody("Login failed, user id and password do not exist.", null, null);
             response.setStatus(401);
         }
+        connection.close();
+        response.setContentType("application/json");
+        mapper.writeValue(response.getWriter(), loginResponseBody);
 
     }
 }
