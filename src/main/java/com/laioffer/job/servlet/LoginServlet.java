@@ -39,7 +39,19 @@ public class LoginServlet extends HttpServlet {
         mapper.writeValue(response.getWriter(), loginResponseBody);
     }
 
-    protected void doPost() {
-        
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        LoginRequestBody body = mapper.readValue(request.getReader(), LoginRequestBody.close);
+        MySQLConnection connection = new MySQLConnection();
+        LoginResponseBody loginResponseBody;
+        if (connection.verifyLogin(body.userId, body.password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user_id", body.userId);
+            loginResponseBody = new LoginResponseBody("OK", body.userId, connection.getFullname(body.userId));
+        } else {
+            loginResponseBody = new LoginResponseBody("Login failed, user id and password do not exist.", null, null);
+            response.setStatus(401);
+        }
+
     }
 }
