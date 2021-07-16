@@ -38,4 +38,8 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("application/json");
         mapper.writeValue(response.getWriter(), loginResponseBody);
     }
+
+    protected void doPost() {
+        
+    }
 }
